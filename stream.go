@@ -32,6 +32,8 @@ type QuicStream interface {
 	WriteHeader(header http.Header, is_body_empty bool)
 	WriteOrBufferData(body []byte, fin bool)
 	CloseReadSide()
+	AddHeader(key string, value string)
+	GetHeader() http.Header
 }
 
 /*
@@ -47,11 +49,12 @@ type QuicStream interface {
 func CreateIncomingDynamicStream(session_c unsafe.Pointer, stream_id uint32, wrapper_c unsafe.Pointer) unsafe.Pointer {
 	session := (*QuicServerSession)(session_c)
 	userStream := session.streamCreator.CreateIncomingDynamicStream(stream_id)
-
+	header := make(http.Header)
 	stream := &QuicServerStream{
 		userStream: userStream,
 		session:    session,
 		wrapper:    wrapper_c,
+		header :    header,
 	}
 
 	// This is to prevent garbage collection. This is cleaned up on QuicServerStream.OnClose()
@@ -60,16 +63,18 @@ func CreateIncomingDynamicStream(session_c unsafe.Pointer, stream_id uint32, wra
 	return unsafe.Pointer(stream)
 }
 
-//export DataStreamProcessorProcessData
-func DataStreamProcessorProcessData(go_data_stream_processor_c unsafe.Pointer, data unsafe.Pointer, data_len uint32, isServer int) uint32 {
+//export DataStreamProcessorAddHeader
+func DataStreamProcessorAddHeader(go_data_stream_processor_c unsafe.Pointer, key_c unsafe.Pointer, key_sz_c C.size_t, value_c unsafe.Pointer, value_sz_c C.size_t, isServer int) {
 	var stream QuicStream
 	if isServer > 0 {
 		stream = (*QuicServerStream)(go_data_stream_processor_c)
 	} else {
 		stream = (*QuicClientStream)(go_data_stream_processor_c)
 	}
-	buf := C.GoBytes(data, C.int(data_len))
-	return uint32(stream.UserStream().ProcessData(stream, buf))
+
+	key := C.GoBytes(key_c, C.int(key_sz_c))
+	value := C.GoBytes(value_c, C.int(value_sz_c))
+	stream.AddHeader(string(key), string(value))
 }
 
 //export DataStreamProcessorOnFinRead

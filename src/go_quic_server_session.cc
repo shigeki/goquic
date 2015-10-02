@@ -82,7 +82,7 @@ void GoQuicServerSession::OnCongestionWindowChange(QuicTime now) {
       sent_packet_manager.GetRttStats()->smoothed_rtt().ToMilliseconds();
   int64 now_ms = now.Subtract(last_scup_time_).ToMilliseconds();
   int64 packets_since_last_scup =
-      connection()->sequence_number_of_last_sent_packet() -
+      connection()->packet_number_of_last_sent_packet() -
       last_scup_sequence_number_;
   if (now_ms < (kMinIntervalBetweenServerConfigUpdatesRTTs * srtt_ms) ||
       now_ms < kMinIntervalBetweenServerConfigUpdatesMs ||
@@ -147,7 +147,7 @@ void GoQuicServerSession::OnCongestionWindowChange(QuicTime now) {
   crypto_stream_->SendServerConfigUpdate(&cached_network_params);
   last_scup_time_ = now;
   last_scup_sequence_number_ =
-      connection()->sequence_number_of_last_sent_packet();
+      connection()->packet_number_of_last_sent_packet();
 }
 
 bool GoQuicServerSession::ShouldCreateIncomingDynamicStream(QuicStreamId id) {

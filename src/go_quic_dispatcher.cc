@@ -266,7 +266,7 @@ void GoQuicDispatcher::OnUnauthenticatedHeader(const QuicPacketHeader& header) {
   time_wait_list_manager_->ProcessPacket(current_server_address_,
                                          current_client_address_,
                                          header.public_header.connection_id,
-                                         header.packet_sequence_number,
+                                         header.packet_packet_number,
                                          *current_packet_);
 }
 

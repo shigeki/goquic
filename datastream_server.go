@@ -41,7 +41,6 @@ type SpdyServerStream struct {
 
 func (stream *SpdyServerStream) ProcessData(serverStream QuicStream, newBytes []byte) int {
 	stream.buffer.Write(newBytes)
-
 	if !stream.header_parsed {
 		// We don't want to consume the buffer *yet*, so create a new reader
 		reader := bytes.NewReader(stream.buffer.Bytes())
@@ -72,7 +71,7 @@ func (stream *SpdyServerStream) OnFinRead(quicStream QuicStream) {
 	}
 	quicStream.CloseReadSide()
 
-	header := stream.header
+	header := quicStream.GetHeader()
 	req := new(http.Request)
 	req.Method = header.Get(":method")
 	req.RequestURI = header.Get(":path")

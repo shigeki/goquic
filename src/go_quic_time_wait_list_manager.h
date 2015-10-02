@@ -73,7 +73,7 @@ class GoQuicTimeWaitListManager : public QuicBlockedWriterInterface {
   virtual void ProcessPacket(const IPEndPoint& server_address,
                              const IPEndPoint& client_address,
                              QuicConnectionId connection_id,
-                             QuicPacketSequenceNumber sequence_number,
+                             QuicPacketNumber sequence_number,
                              const QuicEncryptedPacket& packet);
 
   // Called by the dispatcher when the underlying socket becomes writable again,
@@ -110,7 +110,7 @@ class GoQuicTimeWaitListManager : public QuicBlockedWriterInterface {
   void SendPublicReset(const IPEndPoint& server_address,
                        const IPEndPoint& client_address,
                        QuicConnectionId connection_id,
-                       QuicPacketSequenceNumber rejected_sequence_number);
+                       QuicPacketNumber rejected_sequence_number);
 
   // Either sends the packet and deletes it or makes pending_packets_queue_ the
   // owner of the packet.

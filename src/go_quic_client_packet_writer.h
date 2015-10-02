@@ -21,6 +21,7 @@ class GoQuicClientPacketWriter : public QuicPacketWriter {
   bool IsWriteBlockedDataBuffered() const override;
   bool IsWriteBlocked() const override;
   void SetWritable() override;
+  QuicByteCount GetMaxPacketSize(const IPEndPoint& peer_address) const override;
 
  protected:
   WriteResult WritePacket(const char* buffer,

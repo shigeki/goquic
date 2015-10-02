@@ -158,7 +158,7 @@ void GoQuicTimeWaitListManager::ProcessPacket(
     const IPEndPoint& server_address,
     const IPEndPoint& client_address,
     QuicConnectionId connection_id,
-    QuicPacketSequenceNumber sequence_number,
+    QuicPacketNumber sequence_number,
     const QuicEncryptedPacket& /*packet*/) {
   DCHECK(IsConnectionIdInTimeWait(connection_id));
   DVLOG(1) << "Processing " << connection_id << " in time wait state.";
@@ -198,12 +198,12 @@ void GoQuicTimeWaitListManager::SendPublicReset(
     const IPEndPoint& server_address,
     const IPEndPoint& client_address,
     QuicConnectionId connection_id,
-    QuicPacketSequenceNumber rejected_sequence_number) {
+    QuicPacketNumber rejected_packet_number) {
   QuicPublicResetPacket packet;
   packet.public_header.connection_id = connection_id;
   packet.public_header.reset_flag = true;
   packet.public_header.version_flag = false;
-  packet.rejected_sequence_number = rejected_sequence_number;
+  packet.rejected_packet_number = rejected_packet_number;
   // TODO(satyamshekhar): generate a valid nonce for this connection_id.
   packet.nonce_proof = 1010101;
   packet.client_address = client_address;

@@ -14,10 +14,19 @@ type QuicServerStream struct {
 	userStream DataStreamProcessor
 	wrapper    unsafe.Pointer
 	session    *QuicServerSession
+	header	   http.Header
 }
 
 func (stream *QuicServerStream) UserStream() DataStreamProcessor {
 	return stream.userStream
+}
+
+func (stream *QuicServerStream) AddHeader(key string, value string) {
+     stream.header.Add(key, value)
+}
+
+func (stream *QuicServerStream) GetHeader() http.Header{
+     return stream.header
 }
 
 func (stream *QuicServerStream) WriteHeader(header http.Header, is_body_empty bool) {

@@ -30,12 +30,13 @@ void* CreateIncomingDynamicStream_C(void* go_quic_server_session, uint32_t id, v
     return CreateIncomingDynamicStream(go_quic_server_session, id, go_quic_spdy_server_stream_go_wrapper);
 }
 
-uint32_t DataStreamProcessorProcessData_C(void* go_data_stream_processor, const char *data, uint32_t data_len) {
-    return DataStreamProcessorProcessData(go_data_stream_processor, (void *)data, data_len, 1);
+void DataStreamProcessorAddHeader_C(void* go_data_stream_processor, const char* key, size_t key_len, const char* value, size_t value_len) {
+  DataStreamProcessorAddHeader(go_data_stream_processor, (void *)key, key_len, (void *)value, value_len, 1);
 }
 
-uint32_t DataStreamProcessorProcessDataClient_C(void* go_data_stream_processor, const char *data, uint32_t data_len) {
-    return DataStreamProcessorProcessData(go_data_stream_processor, (void *)data, data_len, 0);
+void DataStreamProcessorAddHeaderClientlient_C(void* go_data_stream_processor, const char *key, size_t key_len, const char *value, size_t value_len) {
+  DataStreamProcessorAddHeader(go_data_stream_processor, (void *)key, key_len, (void *)value, value_len, 0);
+
 }
 
 void DataStreamProcessorOnFinRead_C(void* go_data_stream_processor) {

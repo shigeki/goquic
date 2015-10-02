@@ -42,6 +42,7 @@ class GoQuicServerPacketWriter : public QuicPacketWriter {
   bool IsWriteBlockedDataBuffered() const override;
   bool IsWriteBlocked() const override;
   void SetWritable() override;
+  QuicByteCount GetMaxPacketSize(const IPEndPoint& peer_address) const override;
 
  protected:
   // Do not call WritePacket on its own -- use WritePacketWithCallback

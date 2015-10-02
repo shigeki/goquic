@@ -50,6 +50,11 @@ void GoQuicPerConnectionPacketWriter::SetWritable() {
   shared_writer_->SetWritable();
 }
 
+QuicByteCount GoQuicPerConnectionPacketWriter::GetMaxPacketSize(
+    const IPEndPoint& peer_address) const {
+  return kMaxPacketSize;
+}
+
 void GoQuicPerConnectionPacketWriter::OnWriteComplete(WriteResult result) {
   if (connection_ && result.status == WRITE_STATUS_ERROR) {
     connection_->OnWriteError(result.error_code);

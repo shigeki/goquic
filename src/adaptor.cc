@@ -13,6 +13,7 @@
 #include "net/quic/quic_time.h"
 #include "net/quic/quic_protocol.h"
 #include "net/quic/crypto/quic_random.h"
+#include "net/quic/spdy_utils.h"
 #include "net/base/net_util.h"
 #include "net/base/ip_endpoint.h"
 #include "base/strings/string_piece.h"
@@ -102,7 +103,7 @@ QuicCryptoServerConfig *init_crypto_config(void *go_proof_source) {
   QuicClock* clock = new QuicClock();  // XXX: Not deleted. This should be initialized EXACTLY ONCE
   QuicRandom* random_generator = QuicRandom::GetInstance();  // XXX: Not deleted. This should be initialized EXACTLY ONCE
 
-  // TODO(jaeman, hodduc): What is scfg? 
+  // TODO(jaeman, hodduc): What is scfg?
   scoped_ptr<CryptoHandshakeMessage> scfg(
       crypto_config->AddDefaultConfig(
           random_generator, clock,
@@ -150,8 +151,12 @@ void insert_map(MapStrStr* map, char* key, size_t key_len, char* value, size_t v
       std::pair<std::string, std::string>(std::string(key, key_len), std::string(value, value_len)));
 }
 
-void quic_spdy_server_stream_write_headers(GoQuicSpdyServerStreamGoWrapper* wrapper, MapStrStr* header, int is_empty_body) {
-  wrapper->WriteHeaders(*(SpdyHeaderBlock*)header, is_empty_body, nullptr);
+void quic_spdy_server_stream_write_headers(GoQuicSpdyServerStreamGoWrapper* wrapper, MapStrStr* map, int is_empty_body) {
+  SpdyHeaderBlock headers;
+  for (auto e : *map) {
+    headers[e.first] = e.second;
+  }
+  wrapper->WriteHeaders(net::SpdyUtils::ConvertSpdy3ResponseHeadersToSpdy4(headers), (is_empty_body != 0), nullptr);
 }
 
 void quic_spdy_server_stream_write_or_buffer_data(GoQuicSpdyServerStreamGoWrapper* wrapper, char* buf, size_t bufsize, int fin) {

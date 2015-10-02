@@ -25,15 +25,13 @@ void GoQuicReliableClientStream::SetGoQuicClientStream(void* go_quic_client_stre
   go_quic_client_stream_ = go_quic_client_stream;
 }
 
-uint32 GoQuicReliableClientStream::ProcessData(const char* data,
-                                             uint32 data_len) {
-  uint32_t ret_data_len = DataStreamProcessorProcessData_C(go_quic_client_stream_, data, data_len);
-  return ret_data_len;
-}
-
 void GoQuicReliableClientStream::OnClose() {
   QuicDataStream::OnClose();
   DataStreamProcessorOnClose_C(go_quic_client_stream_);
+}
+
+void GoQuicReliableClientStream::OnDataAvailable() {
+  // TODO implement
 }
 
 void GoQuicReliableClientStream::WriteOrBufferData_(

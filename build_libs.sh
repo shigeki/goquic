@@ -24,10 +24,11 @@ fi
 
 echo "GOARCH: $GOARCH"
 echo "GOOS: $GOOS"
+REV="QUIC_VERSION_26"
 
 if [ ! -d libquic ]; then
-    #git clone https://github.com/devsisters/libquic.git
-    git clone git@github.com:devsisters/libquic.git
+    git clone -b $REV https://github.com/shigeki/libquic.git
+    #git clone git@github.com:devsisters/libquic.git
     #cd libquic
     #git checkout $REV
 fi

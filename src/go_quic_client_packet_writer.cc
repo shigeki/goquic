@@ -35,6 +35,11 @@ void GoQuicClientPacketWriter::SetWritable() {
   write_blocked_ = false;
 }
 
+QuicByteCount GoQuicClientPacketWriter::GetMaxPacketSize(
+    const IPEndPoint& peer_address) const {
+  return kMaxPacketSize;
+}
+
 WriteResult GoQuicClientPacketWriter::WritePacket(
     const char* buffer,
     size_t buf_len,
