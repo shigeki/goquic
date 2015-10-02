@@ -34,8 +34,8 @@ if [ ! -d libquic ]; then
 fi
 
 cd libquic
-rm -fr build
-mkdir -p build
+#rm -fr build
+#mkdir -p build
 cd build
 cmake -GNinja ..
 ninja
