@@ -107,7 +107,7 @@ void quic_reliable_client_stream_write_headers(GoQuicReliableClientStream* strea
 }
 
 void quic_reliable_client_stream_write_or_buffer_data(GoQuicReliableClientStream* stream, char* buf, size_t bufsize, int fin) {
-  stream->WriteOrBufferData_(StringPiece(buf, bufsize), (fin != 0), nullptr);
+  stream->WriteOrBufferData_(StringPiece(buf, bufsize), (fin != 0));
 }
 
 void go_quic_client_session_process_packet(GoQuicClientSession *session, struct GoIPEndPoint *go_self_address, struct GoIPEndPoint *go_peer_address, char *buffer, size_t length) {

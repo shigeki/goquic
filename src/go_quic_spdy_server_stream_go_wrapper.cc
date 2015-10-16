@@ -26,8 +26,8 @@ void GoQuicSpdyServerStreamGoWrapper::CloseReadSide_() {
 }
 
 void GoQuicSpdyServerStreamGoWrapper::WriteOrBufferData_(
-    base::StringPiece buffer, bool fin, net::QuicAckNotifier::DelegateInterface* delegate) {
-  WriteOrBufferData(buffer, fin, delegate);
+    base::StringPiece buffer, bool fin) {
+  WriteOrBufferData(buffer, fin, nullptr);
 }
 
 void GoQuicSpdyServerStreamGoWrapper::OnStreamHeadersComplete(bool fin, size_t frame_len) {

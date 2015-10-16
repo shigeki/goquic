@@ -20,7 +20,7 @@ class GoQuicSpdyServerStreamGoWrapper : public net::QuicDataStream {
 
   // we need a proxy because ReliableQuicStream::WriteOrBufferData & CloseReadSide() is protected.
   // we could access this function from C (go) side.
-  void WriteOrBufferData_(base::StringPiece buffer, bool fin, net::QuicAckNotifier::DelegateInterface* delegate);
+  void WriteOrBufferData_(base::StringPiece buffer, bool fin);
   void CloseReadSide_();
  protected:
   net::SpdyHeaderBlock* request_headers() { return &request_headers_; }

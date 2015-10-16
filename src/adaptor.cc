@@ -160,7 +160,7 @@ void quic_spdy_server_stream_write_headers(GoQuicSpdyServerStreamGoWrapper* wrap
 }
 
 void quic_spdy_server_stream_write_or_buffer_data(GoQuicSpdyServerStreamGoWrapper* wrapper, char* buf, size_t bufsize, int fin) {
-  wrapper->WriteOrBufferData_(StringPiece(buf, bufsize), (fin != 0), nullptr);
+  wrapper->WriteOrBufferData_(StringPiece(buf, bufsize), (fin != 0));
 }
 
 void go_quic_alarm_fire(GoQuicAlarmGoWrapper* go_quic_alarm) {

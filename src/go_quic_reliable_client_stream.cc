@@ -35,8 +35,8 @@ void GoQuicReliableClientStream::OnDataAvailable() {
 }
 
 void GoQuicReliableClientStream::WriteOrBufferData_(
-    base::StringPiece buffer, bool fin, net::QuicAckNotifier::DelegateInterface* delegate) {
-  WriteOrBufferData(buffer, fin, delegate);
+    base::StringPiece buffer, bool fin) {
+  WriteOrBufferData(buffer, fin, nullptr);
 }
 
 }  // namespace net
