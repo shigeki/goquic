@@ -69,7 +69,7 @@ func (stream *SpdyServerStream) OnFinRead(quicStream QuicStream) {
 	if !stream.header_parsed {
 		// TODO(serialx): Send error message
 	}
-	quicStream.CloseReadSide()
+	quicStream.StopReading()
 
 	header := quicStream.GetHeader()
 	req := new(http.Request)

@@ -31,7 +31,7 @@ type QuicStream interface {
 	UserStream() DataStreamProcessor
 	WriteHeader(header http.Header, is_body_empty bool)
 	WriteOrBufferData(body []byte, fin bool)
-	CloseReadSide()
+	StopReading()
 	AddHeader(key string, value string)
 	GetHeader() http.Header
 }

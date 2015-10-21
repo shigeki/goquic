@@ -175,6 +175,6 @@ void packet_writer_on_write_complete(GoQuicServerPacketWriter* cb, int rv) {
   cb->OnWriteComplete(rv);
 }
 
-void quic_spdy_server_stream_close_read_side(GoQuicSpdyServerStreamGoWrapper* wrapper) {
-  wrapper->CloseReadSide_();
+void quic_spdy_server_stream_stop_reading(GoQuicSpdyServerStreamGoWrapper* wrapper) {
+  wrapper->StopReading_();
 }

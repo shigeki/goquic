@@ -58,6 +58,6 @@ func (stream *QuicClientStream) WriteOrBufferData(body []byte, fin bool) {
 	}
 }
 
-func (stream *QuicClientStream) CloseReadSide() {
-	panic("CloseReadSide not supported in client stream")
+func (stream *QuicClientStream) StopReading() {
+	panic("StopReading not supported in client stream")
 }

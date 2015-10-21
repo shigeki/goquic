@@ -123,7 +123,7 @@ class GoQuicDispatcher::QuicFramerVisitor : public QuicFramerVisitorInterface {
     DCHECK(false);
     return false;
   }
-  void OnFecData(const QuicFecData& /*fec*/) override { DCHECK(false); }
+  void OnFecData(base::StringPiece redundancy) override { DCHECK(false); }
   void OnPacketComplete() override { DCHECK(false); }
 
  private:
@@ -266,7 +266,7 @@ void GoQuicDispatcher::OnUnauthenticatedHeader(const QuicPacketHeader& header) {
   time_wait_list_manager_->ProcessPacket(current_server_address_,
                                          current_client_address_,
                                          header.public_header.connection_id,
-                                         header.packet_packet_number,
+                                         header.packet_number,
                                          *current_packet_);
 }
 

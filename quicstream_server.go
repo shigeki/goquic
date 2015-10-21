@@ -58,8 +58,8 @@ func (stream *QuicServerStream) WriteOrBufferData(body []byte, fin bool) {
 	}
 }
 
-func (stream *QuicServerStream) CloseReadSide() {
-	C.quic_spdy_server_stream_close_read_side(stream.wrapper)
+func (stream *QuicServerStream) StopReading() {
+	C.quic_spdy_server_stream_stop_reading(stream.wrapper)
 }
 
 // TODO: delete(stream.session.quicServerStreams, stream)

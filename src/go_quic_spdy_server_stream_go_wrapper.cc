@@ -21,8 +21,8 @@ void GoQuicSpdyServerStreamGoWrapper::SetGoQuicSpdyServerStream(void* go_quic_sp
   go_quic_spdy_server_stream_ = go_quic_spdy_server_stream;
 }
 
-void GoQuicSpdyServerStreamGoWrapper::CloseReadSide_() {
-  ReliableQuicStream::CloseReadSide();
+void GoQuicSpdyServerStreamGoWrapper::StopReading_() {
+  ReliableQuicStream::StopReading();
 }
 
 void GoQuicSpdyServerStreamGoWrapper::WriteOrBufferData_(
